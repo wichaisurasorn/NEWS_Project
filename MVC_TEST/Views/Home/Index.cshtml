@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="container">
+            <h1>ข่าวสาร</h1>
+        </div>
+    </div>
+</div>
+
+<div id="List_new">
+
+</div>
+
+
+
+@*<div class="row">
+    <div class="col-4">
+        <div class="container">
+            <div class="card m-md-3">
+                <div class="card-body">
+                    <img src="~/uploads/22042021114213.jpg" height="250px" />
+                </div>
+                <div class="card-footer">
+                    <h3>jakjdfklajdklfjas;kljdf;lkajsdf;l</h3>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">อ่านต่อ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="container">
+            <div class="card m-md-3">
+                <div class="card-body">
+                    <img src="~/uploads/22042021114213.jpg" height="250px" />
+                </div>
+                <div class="card-footer">
+                    <h3>jakjdfklajdklfjas;kljdf;lkajsdf;l</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="container">
+            <div class="card m-md-3">
+                <div class="card-body">
+                    <img src="~/uploads/22042021114213.jpg" height="250px" />
+                </div>
+                <div class="card-footer">
+                    <h3>jakjdfklajdklfjas;kljdf;lkajsdf;l</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>*@
+
+<!-- Modal Detail -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailtitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-title">                        
+                        <div id="detailimage"></div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div id="detailsupcontent"></div>
+                        <br />
+                        <div id="detailmaincontent"></div>
+                    </div>
+                </div>          
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+<script type="text/javascript">
+    $('#List_new').ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("listnew","Home")',
+            success: function (data) {
+                
+                $('#List_new').html(data);
+            }
+        });
+    });
+
+    function Detail(parameter) {
+        console.log(parameter);
+        $('#detailtitle').html('<h5>' + parameter.titel + '</h5>');
+        $('#detailimage').html('<img src="/uploads/' + parameter.image + '" "' + ' width="764px"' + ' ">');
+        $('#detailsupcontent').html('<h1>' + parameter.sup_content + '</h1>');
+        $('#detailmaincontent').html('<h3>' + parameter.main_content + '</h3>');
+    }
+</script>
+ }

@@ -1,0 +1,25 @@
+﻿@model MVC_TEST.Models.NewsModels;
+@using Newtonsoft.Json;
+
+@if (Model.LNews != null)
+{
+    foreach (var item in Model.LNews)
+    {
+        var data = JsonConvert.SerializeObject(item);
+
+        <div class="card m-md-3">
+            <div class="card-body">
+                <img src="~/uploads/@item.image" height="250px" />
+                
+            </div>
+            <div class="card-footer">
+                <h3>@item.sup_content</h3>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="Detail(@data)">อ่านต่อ</a>
+            </div>
+        </div>
+
+    }
+
+
+
+}

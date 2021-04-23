@@ -1,0 +1,286 @@
+﻿@{
+    ViewData["Title"] = "Management";
+}
+
+
+<div class="row">
+    <div class="col-12">
+
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">เพิ่มข่าวใหม่</button>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h2 class="card-title">การจัดการข่าว</h2>
+                <div id="showdata"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เพิ่มข่าวใหม่</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label>หัวข้อ</label>
+                                        <input type="text" class="form-control" id="Add_title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>เนื้อหาย่อย</label>
+                                        <input type="text" class="form-control" id="Add_supcontent" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>เนือหาหลัก</label>
+                                        <textarea class="form-control" id="Add_maincontent" rows="3"></textarea>
+                                    </div>
+                                    <label>image</label>
+                                    <input type="file" id="Add_image" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="Add_data">บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit-->
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เพิ่มข่าวใหม่</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label>ลำดับ</label>
+                                        <input type="text" class="form-control" id="Edit_id" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>หัวข้อ</label>
+                                        <input type="text" class="form-control" id="Edit_title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>เนื้อหาย่อย</label>
+                                        <input type="text" class="form-control" id="Edit_supcontent" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>เนือหาหลัก</label>
+                                        <textarea class="form-control" id="Edit_maincontent" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>ชื่อภาพ</label>
+                                        <input class="form-control" id="Edit_image" />
+                                    </div>
+                                    <label>image</label>
+                                    <input type="file" id="update_image" /><br />
+                                    <br />
+                                    <div id="showimage"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="Update_data">บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detail -->
+<div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailtitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-title">
+                        <div id="detailimage"></div>
+                    </div>
+                    <div class="card-body">
+
+                        <div id="detailsupcontent"></div>
+                        <br />
+                        <div id="detailmaincontent"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $('#showdata').ready(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("showdata","Management")',
+                success: function (data) {
+                    //alert("kkk");
+                    $('#showdata').html(data);
+
+                }
+            });
+        });
+
+        function Edit(parameter) {
+            console.log("data", parameter);
+            $('#Edit_id').val(parameter.id);
+            $('#Edit_title').val(parameter.titel);
+            $('#Edit_supcontent').val(parameter.sup_content);
+            $('#Edit_maincontent').val(parameter.main_content);
+            $('#Edit_image').val(parameter.image);
+            var ii = parameter.image;
+            $('#showimage').ready(function () {
+                $('#showimage').html('<img src="/uploads/' + ii + '" height="200px" />');
+            })
+
+        }
+        $('#Update_data').click(function () {
+            var id = $('#Edit_id').val();
+            var title = $('#Edit_title').val();
+            var supcontent = $('#Edit_supcontent').val();
+            var maincontent = $('#Edit_maincontent').val();
+            var image = $('#Edit_image').val();
+
+            if (window.FormData !== undefined) {
+                var fileUpload = $("#update_image").get(0);
+                var files = fileUpload.files;
+                var fileData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                fileData.append('files', files[0]);
+                fileData.append('id', id);
+                fileData.append('title', title);
+                fileData.append('supcontent',supcontent);
+                fileData.append('maincontent', maincontent);
+                fileData.append('imageName', image);
+
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Editdata","Management")',
+                contentType: false,
+                processData: false,
+                data: fileData,
+                success: function (data) {
+                    alert("success");
+                    location.reload();
+                }
+            })
+        });
+
+        $('#Add_data').click(function () {
+            var title = $('#Add_title').val();
+            var supcontent = $('#Add_supcontent').val();
+            var maincontent = $('#Add_maincontent').val();
+
+            if (window.FormData !== undefined) {
+                var fileupload = $('#Add_image').get(0);
+                var files = fileupload.files;
+                console.log("data", files);
+                var fileData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                fileData.append('files', files[0]);
+                fileData.append('title', title);
+                fileData.append('supcontent', supcontent);
+                fileData.append('maincontent', maincontent);
+                console.log(fileData);
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("Adddata","Management")',
+                    contentType: false,
+                    processData: false,
+                    data: fileData,
+                    success: function (data) {
+                        alert(data);
+                        location.reload();
+                    }
+                });
+
+            }
+        });
+
+        function Delete(parameter) {
+            console.log(parameter.id);
+            console.log(parameter.image);
+            var id = parameter.id;
+            var image = parameter.image;
+
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("Deletedata","Management")',
+                data: {
+                    id: id,
+                    image:image
+                },
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                }
+            })
+
+
+        }
+
+        function View(parameter) {
+            console.log(parameter);
+            $('#detailtitle').html('<h5>' + parameter.titel + '</h5>');
+            $('#detailimage').html('<img src="/uploads/' + parameter.image + '" "' + ' width="764px"' + ' ">');
+            $('#detailsupcontent').html('<h1>' + parameter.sup_content + '</h1>');
+            $('#detailmaincontent').html('<h3>' + parameter.main_content + '</h3>');
+        }
+    </script>
+}
